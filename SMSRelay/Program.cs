@@ -101,7 +101,7 @@ static Dictionary<string, string> ParseRow(string inputString)
 
     // Definir la expresión regular para extraer las llaves y valores
     //string pattern = @"(\w+)=(\S+),?";
-    string pattern = @"(\w+)=([\s\w:.\/\+]+),?";
+    string pattern = @"(\w+)=([\s\w:.\/\+\?¿:#]+),?";
 
     Regex regex = new Regex(pattern);
 
