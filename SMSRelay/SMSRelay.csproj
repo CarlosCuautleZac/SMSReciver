@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="SharpAdbClient" Version="2.3.23" />
+    <PackageReference Include="SolidSoils.Arduino.Client" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

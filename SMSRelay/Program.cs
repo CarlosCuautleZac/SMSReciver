@@ -1,11 +1,16 @@
 ﻿using System;
 using System.IO;
+using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SharpAdbClient;
 using SMSRelay;
+using Solid.Arduino;
+using Solid.Arduino.Firmata;
 
 var adb = new AdbClient();
+SerialPort puertoSerie = new SerialPort("COM3", 9600);
+puertoSerie.Open();
 
 DateTime currentTime = DateTime.Now;
 long unixTime = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
@@ -48,13 +53,20 @@ Thread t = new Thread(() =>
             List<SMS> Nuevos = messages.Select(x => ConvertirSMS(x)).ToList();
 
 
+
             var recienllegados = Nuevos.Where(x => !Actuales.Any(y => y.Mensaje == x.Mensaje && y.Contacto == x.Contacto && y.Fecha == x.Fecha)).ToList();
 
             //recienllegados.ForEach(x => Console.WriteLine(x));
             foreach (var item in recienllegados)
             {
                 Console.WriteLine(item);
+        
+                puertoSerie.Write(item.Mensaje);
+                
+
             }
+
+
             Actuales.AddRange(recienllegados);
 
             Thread.Sleep(10000);
@@ -70,7 +82,7 @@ t.IsBackground = true;
 t.Start();
 
 Console.ReadLine();
-
+puertoSerie.Close();
 
 
 static SMS ConvertirSMS(string inputString)
