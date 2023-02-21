@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.IO.Ports;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using SharpAdbClient;
 using SMSRelay;
@@ -10,7 +12,16 @@ using Solid.Arduino.Firmata;
 
 var adb = new AdbClient();
 SerialPort puertoSerie = new SerialPort("COM3", 9600);
-puertoSerie.Open();
+try
+{
+    puertoSerie.Open();
+
+}
+catch(FileNotFoundException m)
+{
+    Console.WriteLine("No se encontro el arduino");
+    Environment.Exit(0);
+}
 
 DateTime currentTime = DateTime.Now;
 long unixTime = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
@@ -60,9 +71,9 @@ Thread t = new Thread(() =>
             foreach (var item in recienllegados)
             {
                 Console.WriteLine(item);
-        
-                puertoSerie.Write(item.Mensaje);
-                
+
+                puertoSerie.Write(item.Contacto+","+item.Mensaje);
+
 
             }
 
@@ -109,16 +120,24 @@ static SMS ConvertirSMS(string inputString)
 
 static Dictionary<string, string> ParseRow(string inputString)
 {
+
+    Encoding iso = Encoding.GetEncoding("ISO-8859-1");
+
+    // Decodificar la cadena y convertirla a UTF-8
+    byte[] isoBytes = iso.GetBytes(inputString);
+    string utf8String = Encoding.UTF8.GetString(isoBytes);
+
+
     Dictionary<string, string> rowDict = new Dictionary<string, string>();
 
     // Definir la expresión regular para extraer las llaves y valores
     //string pattern = @"(\w+)=(\S+),?";
-    string pattern = @"(\w+)=([\s\w:.\/\+\?¿:#]+),?";
+    string pattern = @"(\w+)=([\s\w:.\/\+\?¿:#áéíóúÁÉÍÓÚñÑ]+),?";
 
     Regex regex = new Regex(pattern);
 
     // Obtener todas las coincidencias de la expresión regular en la entrada
-    MatchCollection matches = regex.Matches(inputString);
+    MatchCollection matches = regex.Matches(utf8String);
 
     // Iterar sobre las coincidencias y agregarlas al diccionario
     foreach (Match match in matches)
