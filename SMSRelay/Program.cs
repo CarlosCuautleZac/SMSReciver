@@ -6,6 +6,12 @@ using SharpAdbClient;
 using SMSRelay;
 
 var adb = new AdbClient();
+
+DateTime currentTime = DateTime.Now;
+long unixTime = ((DateTimeOffset)currentTime).ToUnixTimeSeconds();
+
+string command = $"content query --uri content://sms/inbox --projection address,date,body --where \"date>={unixTime}\"";
+
 var device = adb.GetDevices().FirstOrDefault();
 if (device == null)
 {
@@ -14,7 +20,6 @@ if (device == null)
 }
 
 var reciver = new ConsoleOutputReceiver();
-var command = "content query --uri content://sms/inbox --projection address,body,date";
 adb.ExecuteRemoteCommand(command, device, reciver);
 
 
@@ -38,7 +43,6 @@ Thread t = new Thread(() =>
         {
 
             var reciver = new ConsoleOutputReceiver();
-            var command = "content query --uri content://sms/inbox --projection address,body,date";
             adb.ExecuteRemoteCommand(command, device, reciver);
             var messages = reciver.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None); ;
             List<SMS> Nuevos = messages.Select(x => ConvertirSMS(x)).ToList();
