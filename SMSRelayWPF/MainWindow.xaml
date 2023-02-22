@@ -11,17 +11,104 @@
     <Window.DataContext>
         <vm:MainViewModel></vm:MainViewModel>
     </Window.DataContext>
-    
-    <Grid>
-        <ListBox ItemsSource="{Binding SMSPantalla}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Contacto}"></TextBlock>
-                        <TextBlock Text="{Binding Mensaje}"></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+
+    <Grid Background="#FF9494">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Padding="20"
+                   HorizontalAlignment="Center"
+                   Foreground="WhiteSmoke"
+                   Grid.ColumnSpan="2"
+                   FontWeight="Black"
+                   FontSize="35">Centro de mensajes</Label>
+            <Border Grid.Row="1"
+                    Grid.ColumnSpan="1"
+                    Background="#FFE3E1"
+                    CornerRadius="0 20 0 0">
+                <Grid>
+                    <ListBox ItemsSource="{Binding SMSPantalla}" Background="Transparent"
+                             Focusable="False"
+                             BorderThickness="0">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Height="75"
+                            Background="#FFF5E4"
+                            Margin="10 5"
+                            CornerRadius="10">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="5"
+                                      Direction="270"
+                                      BlurRadius="5"
+                                      Opacity=".2"
+                                      Color="Gray"></DropShadowEffect>
+                                    </Border.Effect>
+                                    <Grid Margin="10">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Label Foreground="#615858"
+                                   FontWeight="Black" Content="{Binding Contacto}"
+                                   ></Label>
+                                        <Label Grid.Row="1"
+                                   Foreground="#615858" Content="{Binding Mensaje}">
+                                            
+                                        </Label>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Margin="25"
+                    CornerRadius="10"
+                    Background="#FFF5E4"
+                    Grid.Row="1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label HorizontalAlignment="Center"
+                           Foreground="#615858"
+                           FontWeight="Black"
+                           FontSize="30" Content="{Binding SMSActual.Contacto}"></Label>
+                    <TextBlock TextWrapping="Wrap"
+                               Grid.Row="1"
+                               Padding="20 15 20 15"
+                               FontSize="22"
+                               Foreground="#615858" Text="{Binding SMSActual.Mensaje}"></TextBlock>
+                </Grid>
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="5"
+                                      Direction="270"
+                                      BlurRadius="25"
+                                      Opacity=".5"
+                                      Color="Gray"></DropShadowEffect>
+                </Border.Effect>
+            </Border>
+        </Grid>
+
+
+
+
+
+      
     </Grid>
 </Window>

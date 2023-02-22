@@ -3,6 +3,7 @@ using SMSRelayWPF.Helpers;
 using SMSRelayWPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Linq;
@@ -20,12 +21,14 @@ namespace SMSRelayWPF.ViewModels
 
         public List<SMS>? Actuales { get; set; } = new();
         public List<SMS>? Nuevos { get; set; } = new();
+        public SMS SMSActual { get; set; } = new();
+        public SMS SMSAnterior { get; set; } = new();
 
-        public List<SMS>? SMSPantalla { get; set; } = new();
+        public ObservableCollection<SMS>? SMSPantalla { get; set; } = new();
 
-        string command { get; set; }
+        string? command { get; set; }
         bool conectado = false;
-        long unixtime;
+        //long unixtime;
 
         #region Objects
         AdbClient adb;
@@ -86,9 +89,18 @@ namespace SMSRelayWPF.ViewModels
                             {
                                 dispatcher.Invoke(() =>
                                 {
+                                    SMSAnterior = SMSActual;
+                                    SMSActual = item;
+                                    
+
                                     if (SMSPantalla != null)
-                                        SMSPantalla.Add(item);
+                                        SMSPantalla.Add(SMSAnterior);
+
+                                    if (SMSPantalla != null)
+                                        SMSPantalla = new(SMSPantalla.OrderBy(x => x.Fecha).ToList());
+
                                     Actualizar();
+                                    Task.Delay(1000);
                                 });
 
                                 //puertoSerie.Write(item.Contacto + "," + item.Mensaje);
@@ -104,7 +116,7 @@ namespace SMSRelayWPF.ViewModels
                                 Actualizar();
                             }));
 
-                            
+
 
 
 
@@ -145,7 +157,7 @@ namespace SMSRelayWPF.ViewModels
 
                     var messages = reciver.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None); ;
 
-                    List<SMS> Actuales = messages.Select(x => convertSMS.ConvertirSMS(x)).OrderByDescending(x => x.Fecha).ToList();
+                    Actuales = messages.Select(x => convertSMS.ConvertirSMS(x)).OrderByDescending(x => x.Fecha).ToList();
                 }
                 return true;
             }
@@ -154,6 +166,7 @@ namespace SMSRelayWPF.ViewModels
                 MessageBox.Show(ex.Message);
                 conectado = false;
                 //puertoSerie.Close();
+                System.Windows.Application.Current.Shutdown();
                 return false;
             }
         }
