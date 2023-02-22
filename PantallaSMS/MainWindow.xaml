@@ -1,0 +1,138 @@
+﻿<Window x:Class="PantallaSMS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PantallaSMS"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="1050">
+    <Grid Background="#FF9494">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Padding="20"
+                   HorizontalAlignment="Center"
+                   Foreground="WhiteSmoke"
+                   Grid.ColumnSpan="2"
+                   FontWeight="Black"
+                   FontSize="35">Centro de mensajes</Label>
+            <Border Grid.Row="1"
+                    Grid.ColumnSpan="1"
+                    Background="#FFE3E1"
+                    CornerRadius="0 20 0 0">
+                <Grid>
+                    <ListBox Background="Transparent"
+                             Focusable="False"
+                             BorderThickness="0">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Height="75"
+                            Background="#FFF5E4"
+                            Margin="10 5"
+                            CornerRadius="10">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="5"
+                                      Direction="270"
+                                      BlurRadius="5"
+                                      Opacity=".2"
+                                      Color="Gray"></DropShadowEffect>
+                                    </Border.Effect>
+                                    <Grid Margin="10">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Label Foreground="#615858"
+                                   FontWeight="Black"
+                                   >8621008469</Label>
+                                        <Label Grid.Row="1"
+                                   Foreground="#615858">
+                                            dfbfdre sg rg g d eh teh t   eth eehdhdfgh dhdhdhtdreb
+                                        </Label>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Margin="25"
+                    CornerRadius="10"
+                    Background="#FFF5E4"
+                    Grid.Row="1">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label HorizontalAlignment="Center"
+                           Foreground="#615858"
+                           FontWeight="Black"
+                           FontSize="30">8621008469</Label>
+                    <TextBlock TextWrapping="Wrap"
+                               Grid.Row="1"
+                               Padding="20 15 20 15"
+                               FontSize="22"
+                               Foreground="#615858">rvervfevfvfdvdrvervfevfvfdvd</TextBlock>
+                </Grid>
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="5"
+                                      Direction="270"
+                                      BlurRadius="25"
+                                      Opacity=".5"
+                                      Color="Gray"></DropShadowEffect>
+                </Border.Effect>
+            </Border>
+        </Grid>
+        
+        
+        
+        
+        
+        <Grid Height="200"
+              Visibility="Collapsed"
+              Width="500">
+            <Border CornerRadius="10"
+                    Background="#FF9494">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="5"
+                                      Direction="270"
+                                      BlurRadius="25"
+                                      Opacity=".5"
+                                      Color="Gray"></DropShadowEffect>
+                </Border.Effect>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label HorizontalAlignment="Center"
+                           Foreground="WhiteSmoke"
+                           FontWeight="Black"
+                           FontSize="20">8621008469</Label>
+                    <TextBlock TextWrapping="Wrap"
+                               Grid.Row="1"
+                               Padding="20 15 20 15"
+                               FontSize="16"
+                               Foreground="WhiteSmoke"
+                               FontWeight="Light">rvervfevfvfdvdrvervfevfvfdvd</TextBlock>
+                </Grid>
+                
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
