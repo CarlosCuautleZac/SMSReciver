@@ -31,19 +31,28 @@
             <Border Grid.Row="1"
                     Grid.ColumnSpan="1"
                     Background="#FFE3E1"
-                    CornerRadius="0 20 0 0">
+                    CornerRadius="0 10 0 0">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="5"
+                                      Direction="0"
+                                      BlurRadius="25"
+                                      Opacity=".5"
+                                      Color="Gray"></DropShadowEffect>
+
+                    </Border.Effect>
                 <Grid>
                     <ListBox ItemsSource="{Binding SMSPantalla}" Background="Transparent"
                              Focusable="False"
                              BorderThickness="0">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel></StackPanel>
+                                <WrapPanel></WrapPanel>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Border Height="75"
+                                        Width="300"
                             Background="#FFF5E4"
                             Margin="10 5"
                             CornerRadius="10">
@@ -61,9 +70,11 @@
                                             <RowDefinition></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <Label Foreground="#615858"
+                                               FontSize="25"
                                    FontWeight="Black" Content="{Binding Contacto}"
                                    ></Label>
                                         <Label Grid.Row="1"
+                                               FontSize="20"
                                    Foreground="#615858" Content="{Binding Mensaje}">
                                             
                                         </Label>
@@ -76,8 +87,8 @@
             </Border>
 
             <Border Grid.Column="1"
-                    Margin="25"
-                    CornerRadius="10"
+                    Margin="25 0 25 0"
+                    CornerRadius="10 10 0 0"
                     Background="#FFF5E4"
                     Grid.Row="1">
                 <Grid Margin="10">
@@ -97,7 +108,7 @@
                 </Grid>
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="5"
-                                      Direction="270"
+                                      Direction="0"
                                       BlurRadius="25"
                                       Opacity=".5"
                                       Color="Gray"></DropShadowEffect>

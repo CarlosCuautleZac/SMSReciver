@@ -32,7 +32,7 @@ namespace SMSRelayWPF.ViewModels
 
         #region Objects
         AdbClient adb;
-        //SerialPort puertoSerie;
+        SerialPort puertoSerie;
         ConvertSMS convertSMS;
         DeviceData? device;
         Dispatcher dispatcher;
@@ -43,7 +43,7 @@ namespace SMSRelayWPF.ViewModels
         public MainViewModel()
         {
             adb = new AdbClient();
-            //puertoSerie = new SerialPort("COM3", 9600);
+            puertoSerie = new SerialPort("COM3", 9600);
             convertSMS = new();
             dispatcher = Dispatcher.CurrentDispatcher;
             Iniciar();
@@ -89,21 +89,19 @@ namespace SMSRelayWPF.ViewModels
                             {
                                 dispatcher.Invoke(() =>
                                 {
-                                    SMSAnterior = SMSActual;
+                                    if (SMSPantalla != null && SMSActual.Contacto != "")
+                                        SMSPantalla.Add(SMSActual);
+
                                     SMSActual = item;
-                                    
 
                                     if (SMSPantalla != null)
-                                        SMSPantalla.Add(SMSAnterior);
-
-                                    if (SMSPantalla != null)
-                                        SMSPantalla = new(SMSPantalla.OrderBy(x => x.Fecha).ToList());
+                                        SMSPantalla = new(SMSPantalla.OrderByDescending(x => x.Fecha).ToList());
 
                                     Actualizar();
                                     Task.Delay(1000);
                                 });
 
-                                //puertoSerie.Write(item.Contacto + "," + item.Mensaje);
+                                puertoSerie.Write(item.Contacto + "," + item.Mensaje);
 
 
                             }
@@ -138,7 +136,7 @@ namespace SMSRelayWPF.ViewModels
         {
             try
             {
-                //puertoSerie.Open();
+                puertoSerie.Open();
                 conectado = true;
                 if (conectado)
                 {
@@ -165,7 +163,7 @@ namespace SMSRelayWPF.ViewModels
             {
                 MessageBox.Show(ex.Message);
                 conectado = false;
-                //puertoSerie.Close();
+                puertoSerie.Close();
                 System.Windows.Application.Current.Shutdown();
                 return false;
             }
